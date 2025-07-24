@@ -1,43 +1,62 @@
-// Import createSlice từ Redux Toolkit
 import { createSlice } from "@reduxjs/toolkit";
 
-// Tạo slice cho counter
-export const counterSlice = createSlice({
-  name: "counter", // Tên của slice
-  initialState: {
-    value: 0, // Giá trị ban đầu của counter
-    users: [], // Mảng user ban đầu rỗng
-  },
-  reducers: {
-    // Action tăng giá trị counter
-    increment: (state) => {
-      state.value += 1;
+const initialState = {
+    items: [{
+            id: 1,
+            name: "John Doe",
+            email: "john@example.com",
+            age: 28,
+            position: "Developer",
+            department: "IT",
+            salary: 5000,
+        },
+        {
+            id: 2,
+            name: "Jane Smith",
+            email: "jane@example.com",
+            age: 32,
+            position: "Designer",
+            department: "Marketing",
+            salary: 4500,
+        },
+        {
+            id: 3,
+            name: "Mike Johnson",
+            email: "mike@example.com",
+            age: 35,
+            position: "Manager",
+            department: "Sales",
+            salary: 6000,
+        },
+    ],
+    nextId: 4,
+};
+
+export const itemsSlice = createSlice({
+    name: "items",
+    initialState,
+    reducers: {
+        addItem: (state, action) => {
+            const newItem = {
+                id: state.nextId,
+                ...action.payload,
+            };
+            state.items.push(newItem);
+            state.nextId += 1;
+        },
+        updateItem: (state, action) => {
+            const { id, ...updateData } = action.payload;
+            const index = state.items.findIndex((item) => item.id === id);
+            if (index !== -1) {
+                state.items[index] = {...state.items[index], ...updateData };
+            }
+        },
+        deleteItem: (state, action) => {
+            state.items = state.items.filter((item) => item.id !== action.payload);
+        },
     },
-    // Action giảm giá trị counter
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    // Action tăng giá trị counter theo một số lượng cụ thể
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
-    },
-    // Action thêm người dùng mới vào danh sách
-    addUser: (state, action) => {
-      state.users.push({
-        id: Date.now(), // Tạo id duy nhất dựa trên thời gian
-        ...action.payload, // Thêm các thông tin người dùng
-      });
-    },
-    // Action xóa người dùng khỏi danh sách
-    removeUser: (state, action) => {
-      state.users = state.users.filter((user) => user.id !== action.payload);
-    },
-  },
 });
 
-// Export tất cả các actions để sử dụng trong components
-export const { increment, decrement, incrementByAmount, addUser, removeUser } =
-  counterSlice.actions;
+export const { addItem, updateItem, deleteItem } = itemsSlice.actions;
 
-// Export reducer để cấu hình store
-export default counterSlice.reducer;
+export default itemsSlice.reducer;
