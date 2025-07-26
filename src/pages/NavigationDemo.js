@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Layout,
+  // Layout,
   Button,
   Steps,
   Menu,
@@ -12,15 +12,10 @@ import {
   Card,
   Divider,
 } from "antd";
-import {
-  UserOutlined,
-  DownOutlined,
-  HomeOutlined,
-  UserSwitchOutlined,
-} from "@ant-design/icons";
+import { UserOutlined, DownOutlined, HomeOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
-const { Header, Sider, Content } = Layout;
+// const { Header, Sider, Content } = Layout;
 
 const NavigationDemo = () => {
   // Menu điều hướng

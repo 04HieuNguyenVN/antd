@@ -10,9 +10,10 @@ import FormDemo from "./pages/FormDemo";
 import DataDisplayDemo from "./pages/DataDisplayDemo";
 import NavigationDemo from "./pages/NavigationDemo";
 import FeedbackDemo from "./pages/FeedbackDemo";
-import LayoutComponentsDemo from './pages/LayoutComponentsDemo';
-import TablesDemo from './pages/TablesDemo';
-import OtherComponentsDemo from './pages/OtherComponentsDemo';
+import LayoutComponentsDemo from "./pages/LayoutComponentsDemo";
+import TablesDemo from "./pages/TablesDemo";
+import OtherComponentsDemo from "./pages/OtherComponentsDemo";
+import DataEntryDemo from "./pages/DataEntryDemo";
 import "antd/dist/reset.css";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path="/" element={<MainLayout />}>
               <Route index element={<Dashboard />} />
               <Route path="forms" element={<FormDemo />} />
+              <Route path="data-entry" element={<DataEntryDemo />} />
               <Route path="data-display" element={<DataDisplayDemo />} />
               <Route path="navigation" element={<NavigationDemo />} />
               <Route path="feedback" element={<FeedbackDemo />} />

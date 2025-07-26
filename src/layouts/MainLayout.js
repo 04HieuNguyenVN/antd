@@ -3,6 +3,7 @@ import { Layout, Menu } from "antd";
 import {
   DashboardOutlined,
   FormOutlined,
+  EditOutlined,
   TableOutlined,
   BoxPlotOutlined,
   LayoutOutlined,
@@ -10,7 +11,7 @@ import {
   AlertOutlined,
   InteractionOutlined,
 } from "@ant-design/icons";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const { Header, Sider, Content } = Layout;
 
@@ -23,42 +24,47 @@ const MainLayout = () => {
     {
       key: "/",
       icon: <DashboardOutlined />,
-      label: "Bảng điều khiển",
+      label: "Dashboard",
     },
     {
       key: "/forms",
       icon: <FormOutlined />,
-      label: "Biểu mẫu",
+      label: "Forms",
+    },
+    {
+      key: "/data-entry",
+      icon: <EditOutlined />,
+      label: "Data Entry",
     },
     {
       key: "/tables",
       icon: <TableOutlined />,
-      label: "Bảng dữ liệu",
+      label: "Tables",
     },
     {
       key: "/data-display",
       icon: <BoxPlotOutlined />,
-      label: "Hiển thị dữ liệu",
+      label: "Data Display",
     },
     {
       key: "/layout",
       icon: <LayoutOutlined />,
-      label: "Thành phần bố cục",
+      label: "Layout",
     },
     {
       key: "/navigation",
       icon: <BarsOutlined />,
-      label: "Điều hướng",
+      label: "Navigation",
     },
     {
       key: "/feedback",
       icon: <AlertOutlined />,
-      label: "Phản hồi",
+      label: "Feedback",
     },
     {
       key: "/other",
       icon: <InteractionOutlined />,
-      label: "Thành phần khác",
+      label: "Other Components",
     },
   ];
 
@@ -77,7 +83,7 @@ const MainLayout = () => {
             color: "white",
           }}
         >
-          Ant Design Demo
+          Ant Demo
         </div>
 
         {/* Menu điều hướng chính */}

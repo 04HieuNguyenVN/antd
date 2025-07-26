@@ -1,5 +1,13 @@
 import React from "react";
-import { Button, Card, Divider, Space, Typography, FloatButton } from "antd";
+import {
+  Button,
+  Card,
+  Divider,
+  Space,
+  Typography,
+  FloatButton,
+  ColorPicker,
+} from "antd";
 import { PlusOutlined, CustomerServiceOutlined } from "@ant-design/icons";
 
 const { Title, Paragraph, Text, Link } = Typography;
@@ -77,9 +85,18 @@ const OtherComponentsDemo = () => {
 
         {/* Nút hỗ trợ khách hàng */}
         <FloatButton icon={<CustomerServiceOutlined />} style={{ right: 24 }} />
-
-        <Paragraph>Cuộn xuống để xem nút quay lại đầu trang.</Paragraph>
       </Card>
+      <Divider orientation="left">ColorPicker</Divider>
+      <Space direction="vertical">
+        <ColorPicker defaultValue="#1677ff" size="small" />
+        <ColorPicker defaultValue="#1677ff" />
+        <ColorPicker defaultValue="#1677ff" size="large" />
+      </Space>
+      <Space direction="vertical">
+        <ColorPicker defaultValue="#1677ff" size="small" showText />
+        <ColorPicker defaultValue="#1677ff" showText />
+        <ColorPicker defaultValue="#1677ff" size="large" showText />
+      </Space>
     </Space>
   );
 };
