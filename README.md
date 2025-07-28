@@ -252,7 +252,7 @@ function App() {
 
 ### Common Issues
 
-**❓ Port 3000 đã được sử dụng**
+**❓ Port 3001 đã được sử dụng**
 
 ```bash
 # Sử dụng port khác
