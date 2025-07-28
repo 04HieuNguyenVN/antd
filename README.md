@@ -27,14 +27,13 @@ Ant Design Showcase là một ứng dụng React được xây dựng để demo
 
 ### 🎯 Advanced Features
 
-- **State Management**: Redux Toolkit integration
-- **Responsive Design**: Mobile-first approach
-- **Interactive Examples**: Live demos với real-time updates
+- **State Management**: Tích hợp Redux Toolkit
+- **Responsive Design**: Phương pháp tiếp cận ưu tiên thiết bị di động
+- **Interactive Examples**: Bản demo trực tiếp với cập nhật thời gian thực
 - **Code Examples**: Clean, documented code samples
-- **Search & Filter**: Advanced data manipulation
+- **Search & Filter**: Thao tác dữ liệu nâng cao
 - **Real-time Updates**: Live statistics và notifications
-- **Theme Support**: Customizable Ant Design theming
-
+- **Theme Support**: Chủ đề thiết kế Ant có thể tùy chỉnh
 ## 🚀 Demo
 
 🔗 **[Live Demo](https://your-demo-link.com)** (Coming soon)
