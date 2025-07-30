@@ -45,14 +45,29 @@ import {
   TeamOutlined,
   RiseOutlined,
 } from "@ant-design/icons";
+import "../styles/pages/Dashboard.css";
 
 const { Title, Text, Paragraph } = Typography;
 
-const Dashboard = () => {
-  const [activeTab, setActiveTab] = useState("1");
+interface ActivityData {
+  title: string;
+  description: string;
+  avatar: React.ReactNode;
+}
+
+interface TableData {
+  key: string;
+  name: string;
+  sales: number;
+  status: string;
+  date: string;
+}
+
+const Dashboard: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<string>("1");
 
   // Dữ liệu mẫu cho các component
-  const activityData = [
+  const activityData: ActivityData[] = [
     {
       title: "Người dùng mới đăng ký",
       description: "5 phút trước",
@@ -124,7 +139,7 @@ const Dashboard = () => {
       title: "Trạng thái",
       dataIndex: "status",
       key: "status",
-      render: (status) => (
+      render: (status: string) => (
         <Tag color={status === "active" ? "green" : "red"}>
           {status === "active" ? "Hoạt động" : "Không hoạt động"}
         </Tag>
@@ -132,9 +147,9 @@ const Dashboard = () => {
     },
   ];
   return (
-    <div>
+    <div className="dashboard">
       <BackTop />
-      <Space direction="vertical" size="large" style={{ width: "100%" }}>
+      <Space direction="vertical" size="large" className="dashboard__space">
         {/* Thông báo chào mừng */}
         <Alert
           message="Chào mừng đến với bản demo các thành phần Ant Design"
@@ -149,7 +164,7 @@ const Dashboard = () => {
         />
 
         {/* Tiêu đề trang với Badge */}
-        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+        <div className="dashboard__header">
           <Title level={2}>Tổng quan</Title>
           <Badge count={5} offset={[10, 0]}>
             <Avatar shape="square" icon={<UserOutlined />} />
@@ -276,31 +291,30 @@ const Dashboard = () => {
                 key: "3",
                 label: "Timeline",
                 children: (
-                  <Timeline
-                    items={[
-                      {
-                        dot: (
-                          <ClockCircleOutlined style={{ fontSize: "16px" }} />
-                        ),
-                        children: "Tạo dịch vụ (9:00 AM)",
-                        color: "green",
-                      },
-                      {
-                        dot: <SyncOutlined style={{ fontSize: "16px" }} />,
-                        children: "Đang xử lý (10:00 AM)",
-                        color: "blue",
-                      },
-                      {
-                        dot: (
-                          <ExclamationCircleOutlined
-                            style={{ fontSize: "16px" }}
-                          />
-                        ),
-                        children: "Cần xem xét (11:00 AM)",
-                        color: "red",
-                      },
-                    ]}
-                  />
+                  <Timeline>
+                    <Timeline.Item
+                      dot={<ClockCircleOutlined style={{ fontSize: "16px" }} />}
+                      color="green"
+                    >
+                      Tạo dịch vụ (9:00 AM)
+                    </Timeline.Item>
+                    <Timeline.Item
+                      dot={<SyncOutlined style={{ fontSize: "16px" }} />}
+                      color="blue"
+                    >
+                      Đang xử lý (10:00 AM)
+                    </Timeline.Item>
+                    <Timeline.Item
+                      dot={
+                        <ExclamationCircleOutlined
+                          style={{ fontSize: "16px" }}
+                        />
+                      }
+                      color="red"
+                    >
+                      Cần xem xét (11:00 AM)
+                    </Timeline.Item>
+                  </Timeline>
                 ),
               },
             ]}

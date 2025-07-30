@@ -1,0 +1,79 @@
+/* Dashboard Styles */
+.dashboard {
+  width: 100%;
+}
+
+.dashboard__space {
+  width: 100%;
+}
+
+.dashboard__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dashboard__avatar--green {
+  background-color: #87d068;
+}
+
+.dashboard__avatar--blue {
+  background-color: #108ee9;
+}
+
+.dashboard__statistic--positive {
+  color: #3f8600;
+}
+
+.dashboard__statistic--negative {
+  color: #cf1322;
+}
+
+.dashboard__rate {
+  font-size: 14px;
+}
+
+.dashboard__timeline-icon {
+  font-size: 16px;
+}
+
+.dashboard__card-1 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
+}
+
+.dashboard__card-2 {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  text-align: center;
+}
+
+.dashboard__card-3 {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  text-align: center;
+}
+
+.dashboard__card-body {
+  padding: 40px 24px;
+}
+
+.dashboard__card-icon--primary {
+  font-size: 48px;
+  color: #1890ff;
+}
+
+.dashboard__card-icon--success {
+  font-size: 48px;
+  color: #52c41a;
+}
+
+.dashboard__card-icon--warning {
+  font-size: 48px;
+  color: #fa8c16;
+}
+
+.dashboard__progress {
+  width: 100px;
+}

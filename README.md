@@ -34,6 +34,7 @@ Ant Design Showcase là một ứng dụng React được xây dựng để demo
 - **Search & Filter**: Thao tác dữ liệu nâng cao
 - **Real-time Updates**: Live statistics và notifications
 - **Theme Support**: Chủ đề thiết kế Ant có thể tùy chỉnh
+
 ## 🚀 Demo
 
 🔗 **[Live Demo](https://your-demo-link.com)** (Coming soon)
@@ -125,7 +126,7 @@ antd-showcase/
 #### 📝 Data Entry (15+ components)
 
 - [x] Input, Input.TextArea, Input.Search, Input.Password
-- [x] InputNumber, Select, AutoComplete, Cascader
+- [x] InputNumber, Select, AutoComplete
 - [x] DatePicker, TimePicker, RangePicker
 - [x] Upload, Dragger, ColorPicker
 - [x] Rate, Slider, Switch, Radio, Checkbox

@@ -1,0 +1,48 @@
+/* User Detail Styles */
+.user-detail__container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.user-detail__header {
+  margin-bottom: 24px;
+}
+
+.user-detail__back-button {
+  margin-right: 16px;
+}
+
+.user-detail__content {
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-detail__info-section {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.user-detail__form-section {
+  margin-top: 24px;
+}
+
+.user-detail__actions {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.user-detail__delete-button {
+  margin-left: 16px;
+}
+
+.user-detail__not-found {
+  text-align: center;
+  padding: 50px;
+}
+
+.user-detail__not-found-title {
+  margin-bottom: 16px;
+}

@@ -69,26 +69,16 @@ const NavigationDemo = () => {
       {/* Breadcrumb: Điều hướng đường dẫn */}
       <Divider orientation="left">Đường dẫn (Breadcrumb)</Divider>
       <Card>
-        <Breadcrumb
-          items={[
-            {
-              href: "",
-              title: <HomeOutlined />,
-            },
-            {
-              href: "",
-              title: (
-                <>
-                  <UserOutlined />
-                  <span>Danh sách ứng dụng</span>
-                </>
-              ),
-            },
-            {
-              title: "Ứng dụng",
-            },
-          ]}
-        />
+        <Breadcrumb>
+          <Breadcrumb.Item href="">
+            <HomeOutlined />
+          </Breadcrumb.Item>
+          <Breadcrumb.Item href="">
+            <UserOutlined />
+            <span>Danh sách ứng dụng</span>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>Ứng dụng</Breadcrumb.Item>
+        </Breadcrumb>
       </Card>
 
       {/* Phân trang */}

@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
+import "../styles/pages/TablesDemo.css";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   Table,
   Button,
@@ -24,24 +26,17 @@ import {
   Badge,
   Statistic,
   Progress,
-  Divider,
   Alert,
-  Switch,
   Radio,
   Checkbox,
   Slider,
   Rate,
-  AutoComplete,
   Drawer,
   Descriptions,
   Timeline,
-  Steps,
   Result,
   Empty,
-  Spin,
-  Affix,
   BackTop,
-  FloatButton,
   Tabs,
   Collapse,
   Segmented,
@@ -61,17 +56,17 @@ import {
   BarChartOutlined,
   PieChartOutlined,
   LineChartOutlined,
-  FileTextOutlined,
   DownloadOutlined,
   PrinterOutlined,
   ShareAltOutlined,
   StarOutlined,
   HeartOutlined,
   LikeOutlined,
-  QuestionCircleOutlined,
   EditOutlined,
 } from "@ant-design/icons";
 import { addItem, updateItem, deleteItem } from "../store/tablesSlice";
+import { RootState } from "../store";
+import { TableItem, TableSettings } from "../types";
 import dayjs from "dayjs";
 
 const { Title, Text, Paragraph } = Typography;
@@ -80,48 +75,50 @@ const { Panel } = Collapse;
 const { TabPane } = Tabs;
 
 // Hàm chuyển file hình ảnh sang định dạng base64
-const getBase64 = (file) =>
+const getBase64 = (file: File): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
+    reader.onload = () => resolve(reader.result as string);
     reader.onerror = (error) => reject(error);
   });
 
 // Hàm tính tuổi từ ngày sinh
-const calculateAge = (birthDate) => {
+const calculateAge = (birthDate: string | null): number => {
   if (!birthDate) return 0;
   const today = dayjs();
   const birth = dayjs(birthDate);
   return today.diff(birth, "year");
 };
 
-const TablesDemo = () => {
+const TablesDemo: React.FC = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const dataSource = useSelector((state) => state.tables.data); // Lấy danh sách từ Redux
+  const navigate = useNavigate();
+  const dataSource = useSelector((state: RootState) => state.tables.data);
 
   // State quản lý modal và trạng thái chỉnh sửa
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [editingItem, setEditingItem] = useState(null);
-  const [fileList, setFileList] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [editingItem, setEditingItem] = useState<TableItem | null>(null);
+  const [fileList, setFileList] = useState<any[]>([]);
 
   // State mới cho các tính năng bổ sung
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [searchText, setSearchText] = useState("");
-  const [filteredData, setFilteredData] = useState(dataSource);
-  const [tableLoading, setTableLoading] = useState(false);
-  const [viewMode, setViewMode] = useState("table");
-  const [drawerVisible, setDrawerVisible] = useState(false);
-  const [selectedRecord, setSelectedRecord] = useState(null);
-  const [tableSettings, setTableSettings] = useState({
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [searchText, setSearchText] = useState<string>("");
+  const [filteredData, setFilteredData] = useState<TableItem[]>(dataSource);
+  const [tableLoading, setTableLoading] = useState<boolean>(false);
+  const [viewMode, setViewMode] = useState<string>("table");
+  const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
+  const [selectedRecord, setSelectedRecord] = useState<TableItem | null>(null);
+  const [tableSettings, setTableSettings] = useState<TableSettings>({
     showBorder: true,
     size: "middle",
     showHeader: true,
+    pagination: true,
   });
-  const [activeTab, setActiveTab] = useState("1");
-  const [exportLoading, setExportLoading] = useState(false);
-  const [importLoading, setImportLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<string>("1");
+  const [exportLoading, setExportLoading] = useState<boolean>(false);
+  const [importLoading, setImportLoading] = useState<boolean>(false);
 
   // Effect để cập nhật dữ liệu đã lọc
   useEffect(() => {
@@ -140,7 +137,7 @@ const TablesDemo = () => {
   }, [dataSource, searchText]);
 
   // Các hàm xử lý mới
-  const handleSearch = (value) => {
+  const handleSearch = (value: string) => {
     setSearchText(value);
   };
 
@@ -168,7 +165,7 @@ const TablesDemo = () => {
     }, 1500);
   };
 
-  const handleViewRecord = (record) => {
+  const handleViewRecord = (record: TableItem) => {
     setSelectedRecord(record);
     setDrawerVisible(true);
   };
@@ -184,7 +181,7 @@ const TablesDemo = () => {
       content: `Bạn có chắc muốn xóa ${selectedRowKeys.length} mục đã chọn?`,
       onOk: () => {
         selectedRowKeys.forEach((key) => {
-          dispatch(deleteItem(key));
+          dispatch(deleteItem(key.toString()));
         });
         setSelectedRowKeys([]);
         message.success(`Đã xóa ${selectedRowKeys.length} mục`);
@@ -195,7 +192,11 @@ const TablesDemo = () => {
   const rowSelection = {
     selectedRowKeys,
     onChange: setSelectedRowKeys,
-    onSelectAll: (selected, selectedRows, changeRows) => {
+    onSelectAll: (
+      selected: boolean,
+      selectedRows: TableItem[],
+      changeRows: TableItem[]
+    ) => {
       console.log(selected, selectedRows, changeRows);
     },
   };
@@ -209,7 +210,7 @@ const TablesDemo = () => {
   };
 
   // Sửa mục đã có
-  const handleEditItem = (record) => {
+  const handleEditItem = (record: TableItem) => {
     setEditingItem(record);
     const formValues = {
       ...record,
@@ -225,7 +226,7 @@ const TablesDemo = () => {
   };
 
   // Xóa mục
-  const handleDeleteItem = (key) => {
+  const handleDeleteItem = (key: string) => {
     dispatch(deleteItem(key));
     message.success("Xóa thành công");
   };
@@ -275,7 +276,7 @@ const TablesDemo = () => {
   };
 
   // Xử lý khi thay đổi ngày sinh để tự động cập nhật tuổi
-  const handleBirthDateChange = (date) => {
+  const handleBirthDateChange = (date: any) => {
     if (date) {
       const age = calculateAge(date.format("YYYY-MM-DD"));
       form.setFieldsValue({ age });
@@ -289,7 +290,7 @@ const TablesDemo = () => {
     onRemove: () => {
       setFileList([]);
     },
-    beforeUpload: (file) => {
+    beforeUpload: (file: File) => {
       const isJpgOrPng =
         file.type === "image/jpeg" || file.type === "image/png";
       if (!isJpgOrPng) {
@@ -305,7 +306,7 @@ const TablesDemo = () => {
       return false; // Không tự động upload
     },
     fileList,
-    listType: "picture",
+    listType: "picture" as const,
     maxCount: 1,
   };
 
@@ -320,7 +321,7 @@ const TablesDemo = () => {
       dataIndex: "avatar",
       key: "avatar",
       width: 120, // Đặt width cố định cho cột ảnh
-      render: (avatar, record) => (
+      render: (avatar: string, record: TableItem) => (
         <Tooltip
           title={
             <div>
@@ -336,12 +337,7 @@ const TablesDemo = () => {
             width={80}
             height={80}
             src={avatar}
-            style={{
-              objectFit: "cover",
-              borderRadius: "8px",
-              border: "1px solid #f0f0f0",
-              cursor: "pointer",
-            }}
+            className="avatar-preview"
             // fallback="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxIDIiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxwYXRoIGQ9Ik0wIDBoMXYxSDB6IiBmaWxsPSIjZGRkIj48L3BhdGg+PC9zdmc+"
           />
         </Tooltip>
@@ -355,15 +351,10 @@ const TablesDemo = () => {
       ),
       dataIndex: "name",
       key: "name",
-      sorter: (a, b) => a.name.localeCompare(b.name),
-      render: (name) => (
+      sorter: (a: TableItem, b: TableItem) => a.name.localeCompare(b.name),
+      render: (name: string) => (
         <Tooltip title={`Tên đầy đủ: ${name}`}>
-          <span
-            style={{
-              cursor: "default",
-              fontWeight: "500",
-            }}
-          >
+          <span className="name-text">
             {name.length > 15 ? `${name.substring(0, 15)}...` : name}
           </span>
         </Tooltip>
@@ -377,7 +368,7 @@ const TablesDemo = () => {
       ),
       dataIndex: "birthDate",
       key: "birthDate",
-      render: (birthDate, record) => {
+      render: (birthDate: string, record: TableItem) => {
         const formattedDate = birthDate
           ? dayjs(birthDate).format("DD/MM/YYYY")
           : "-";
@@ -400,11 +391,11 @@ const TablesDemo = () => {
               </div>
             }
           >
-            <span style={{ cursor: "default" }}>{formattedDate}</span>
+            <span className="cursor-default">{formattedDate}</span>
           </Tooltip>
         );
       },
-      sorter: (a, b) => {
+      sorter: (a: TableItem, b: TableItem) => {
         if (!a.birthDate && !b.birthDate) return 0;
         if (!a.birthDate) return 1;
         if (!b.birthDate) return -1;
@@ -419,8 +410,8 @@ const TablesDemo = () => {
       ),
       dataIndex: "age",
       key: "age",
-      sorter: (a, b) => a.age - b.age,
-      render: (age, record) => (
+      sorter: (a: TableItem, b: TableItem) => a.age - b.age,
+      render: (age: number, record: TableItem) => (
         <Tooltip
           title={
             <div>
@@ -459,9 +450,9 @@ const TablesDemo = () => {
       ),
       dataIndex: "address",
       key: "address",
-      render: (address) => (
+      render: (address: string) => (
         <Tooltip title={`Địa chỉ đầy đủ: ${address}`}>
-          <span style={{ cursor: "default" }}>
+          <span className="cursor-default">
             {address && address.length > 25
               ? `${address.substring(0, 25)}...`
               : address}
@@ -477,9 +468,9 @@ const TablesDemo = () => {
       ),
       dataIndex: "phone",
       key: "phone",
-      render: (phone) => (
+      render: (phone: string) => (
         <Tooltip title={`Số điện thoại: ${phone}`}>
-          <span style={{ cursor: "default" }}>
+          <span className="cursor-default">
             {phone && phone.length > 25
               ? `${phone.substring(0, 25)}...`
               : phone}
@@ -495,9 +486,9 @@ const TablesDemo = () => {
       ),
       dataIndex: "email",
       key: "email",
-      render: (email) => (
+      render: (email: string) => (
         <Tooltip title={`Email: ${email}`}>
-          <span style={{ cursor: "default" }}>
+          <span className="cursor-default">
             {email && email.length > 25
               ? `${email.substring(0, 25)}...`
               : email}
@@ -512,17 +503,27 @@ const TablesDemo = () => {
         </Tooltip>
       ),
       key: "action",
-      width: 200,
-      render: (_, record) => (
+      width: 280, // Tăng width để chứa thêm button
+      render: (_: any, record: TableItem) => (
         <Space size="small">
-          <Tooltip title="Xem chi tiết" placement="top">
+          <Tooltip title="Xem chi tiết đầy đủ" placement="top">
+            <Button
+              type="primary"
+              icon={<EyeOutlined />}
+              onClick={() => navigate(`/item/${record.key}`)}
+              size="small"
+            >
+              Chi tiết
+            </Button>
+          </Tooltip>
+          <Tooltip title="Xem nhanh" placement="top">
             <Button
               type="link"
               icon={<EyeOutlined />}
               onClick={() => handleViewRecord(record)}
               size="small"
             >
-              Xem
+              Xem nhanh
             </Button>
           </Tooltip>
           <Tooltip title="Chỉnh sửa thông tin" placement="top">
@@ -530,7 +531,7 @@ const TablesDemo = () => {
               type="link"
               onClick={() => handleEditItem(record)}
               size="small"
-              style={{ color: "#1890ff" }}
+              className="text-primary"
             >
               Sửa
             </Button>
@@ -544,9 +545,7 @@ const TablesDemo = () => {
                 <div>
                   Bạn có chắc muốn xóa <strong>{record.name}</strong> không?
                 </div>
-                <div
-                  style={{ fontSize: "12px", color: "#999", marginTop: "4px" }}
-                >
+                <div className="metadata-text">
                   Hành động này không thể hoàn tác
                 </div>
               </div>
@@ -571,17 +570,8 @@ const TablesDemo = () => {
   return (
     <div>
       <BackTop />
-      <FloatButton.Group
-        trigger="hover"
-        type="primary"
-        style={{ right: 24 }}
-        icon={<QuestionCircleOutlined />}
-      >
-        <FloatButton icon={<FileTextOutlined />} tooltip="Hướng dẫn" />
-        <FloatButton icon={<SettingOutlined />} tooltip="Cài đặt" />
-      </FloatButton.Group>
 
-      <Space direction="vertical" size="large" style={{ width: "100%" }}>
+      <Space direction="vertical" size="large" className="tables-demo-table">
         {/* Header với Alert */}
         <Alert
           message="Quản lý dữ liệu người dùng"
@@ -594,11 +584,11 @@ const TablesDemo = () => {
         {/* Title và Statistics */}
         <div>
           <Title level={2}>
-            <TeamOutlined style={{ marginRight: 8 }} />
+            <TeamOutlined className="tables-demo-header" />
             Quản lý bảng (CRUD)
           </Title>
 
-          <Row gutter={16} style={{ marginTop: 16 }}>
+          <Row gutter={16} className="tables-demo-row">
             <Col span={6}>
               <Card>
                 <Statistic
@@ -633,7 +623,7 @@ const TablesDemo = () => {
                   percent={Math.round(
                     (filteredData.length / dataSource.length) * 100
                   )}
-                  size={60}
+                  size={60 as any}
                   format={() => `${filteredData.length}/${dataSource.length}`}
                 />
               </Card>
@@ -660,7 +650,7 @@ const TablesDemo = () => {
                 },
               ]}
               value={viewMode}
-              onChange={setViewMode}
+              onChange={(value) => setViewMode(value as string)}
             />
           }
         >
@@ -672,7 +662,7 @@ const TablesDemo = () => {
                 enterButton={<SearchOutlined />}
                 size="large"
                 onSearch={handleSearch}
-                style={{ width: "100%" }}
+                className="tables-demo-table"
               />
             </Col>
             <Col span={16}>
@@ -752,7 +742,7 @@ const TablesDemo = () => {
                   }}
                   components={{
                     body: {
-                      row: ({ children, ...restProps }) => (
+                      row: ({ children, ...restProps }: any) => (
                         <tr
                           {...restProps}
                           style={{
@@ -782,7 +772,7 @@ const TablesDemo = () => {
                       }}
                     >
                       <Result
-                        icon={<PieChartOutlined style={{ color: "#1890ff" }} />}
+                        icon={<PieChartOutlined className="text-primary" />}
                         title="Biểu đồ thống kê"
                         subTitle="Tính năng biểu đồ sẽ được cập nhật"
                       />
@@ -800,9 +790,7 @@ const TablesDemo = () => {
                       }}
                     >
                       <Result
-                        icon={
-                          <LineChartOutlined style={{ color: "#52c41a" }} />
-                        }
+                        icon={<LineChartOutlined className="text-success" />}
                         title="Biểu đồ phân bố"
                         subTitle="Tính năng biểu đồ sẽ được cập nhật"
                       />
@@ -827,7 +815,7 @@ const TablesDemo = () => {
                             size: e.target.value,
                           })
                         }
-                        style={{ marginTop: 8 }}
+                        className="margin-top-8"
                       >
                         <Radio.Button value="small">Nhỏ</Radio.Button>
                         <Radio.Button value="middle">Trung bình</Radio.Button>
@@ -847,7 +835,7 @@ const TablesDemo = () => {
                             showBorder: e.target.checked,
                           })
                         }
-                        style={{ marginTop: 8, display: "block" }}
+                        className="margin-top-8-block"
                       >
                         Hiển thị viền
                       </Checkbox>
@@ -859,7 +847,7 @@ const TablesDemo = () => {
                             showHeader: e.target.checked,
                           })
                         }
-                        style={{ marginTop: 8, display: "block" }}
+                        className="margin-top-8-block"
                       >
                         Hiển thị header
                       </Checkbox>
@@ -869,7 +857,7 @@ const TablesDemo = () => {
                     <div>
                       <Text strong>Các tính năng khác:</Text>
                       <br />
-                      <Space direction="vertical" style={{ marginTop: 8 }}>
+                      <Space direction="vertical" className="margin-top-8">
                         <Button icon={<DownloadOutlined />} block>
                           Tải xuống PDF
                         </Button>
@@ -897,43 +885,38 @@ const TablesDemo = () => {
             key="2"
           >
             <Card>
-              <Timeline
-                items={[
-                  {
-                    dot: <UserOutlined style={{ fontSize: "16px" }} />,
-                    children: (
-                      <div>
-                        <Text strong>Thêm người dùng mới</Text>
-                        <br />
-                        <Text type="secondary">2 phút trước</Text>
-                      </div>
-                    ),
-                    color: "green",
-                  },
-                  {
-                    dot: <EditOutlined style={{ fontSize: "16px" }} />,
-                    children: (
-                      <div>
-                        <Text strong>Cập nhật thông tin</Text>
-                        <br />
-                        <Text type="secondary">5 phút trước</Text>
-                      </div>
-                    ),
-                    color: "blue",
-                  },
-                  {
-                    dot: <FilterOutlined style={{ fontSize: "16px" }} />,
-                    children: (
-                      <div>
-                        <Text strong>Xóa 3 người dùng</Text>
-                        <br />
-                        <Text type="secondary">10 phút trước</Text>
-                      </div>
-                    ),
-                    color: "red",
-                  },
-                ]}
-              />
+              <Timeline>
+                <Timeline.Item
+                  dot={<UserOutlined style={{ fontSize: "16px" }} />}
+                  color="green"
+                >
+                  <div>
+                    <Text strong>Thêm người dùng mới</Text>
+                    <br />
+                    <Text type="secondary">2 phút trước</Text>
+                  </div>
+                </Timeline.Item>
+                <Timeline.Item
+                  dot={<EditOutlined style={{ fontSize: "16px" }} />}
+                  color="blue"
+                >
+                  <div>
+                    <Text strong>Cập nhật thông tin</Text>
+                    <br />
+                    <Text type="secondary">5 phút trước</Text>
+                  </div>
+                </Timeline.Item>
+                <Timeline.Item
+                  dot={<FilterOutlined style={{ fontSize: "16px" }} />}
+                  color="red"
+                >
+                  <div>
+                    <Text strong>Xóa 3 người dùng</Text>
+                    <br />
+                    <Text type="secondary">10 phút trước</Text>
+                  </div>
+                </Timeline.Item>
+              </Timeline>
             </Card>
           </TabPane>
 
@@ -970,7 +953,7 @@ const TablesDemo = () => {
                 </Row>
               </Panel>
               <Panel header="Xuất/Nhập dữ liệu" key="2">
-                <Space direction="vertical" style={{ width: "100%" }}>
+                <Space direction="vertical" className="tables-demo-table">
                   <Alert
                     message="Hỗ trợ định dạng"
                     description="Excel (.xlsx), CSV (.csv), JSON (.json)"
@@ -1008,16 +991,20 @@ const TablesDemo = () => {
         open={drawerVisible}
       >
         {selectedRecord && (
-          <Space direction="vertical" size="large" style={{ width: "100%" }}>
-            <div style={{ textAlign: "center" }}>
+          <Space
+            direction="vertical"
+            size="large"
+            className="tables-demo-table"
+          >
+            <div className="center-content">
               <Image
                 width={120}
                 height={120}
-                src={selectedRecord.avatar}
+                src={selectedRecord.avatar || undefined}
                 style={{ borderRadius: "50%", objectFit: "cover" }}
                 fallback="data:image/png;base64,..."
               />
-              <Title level={3} style={{ marginTop: 16 }}>
+              <Title level={3} className="tables-demo-row">
                 {selectedRecord.name}
               </Title>
               <Rate disabled defaultValue={5} />
@@ -1105,7 +1092,7 @@ const TablesDemo = () => {
                 ]}
               >
                 <DatePicker
-                  style={{ width: "100%" }}
+                  className="tables-demo-table"
                   format="DD/MM/YYYY"
                   placeholder="Chọn ngày sinh"
                   onChange={handleBirthDateChange}
@@ -1122,7 +1109,7 @@ const TablesDemo = () => {
               <Form.Item name="age" label="Tuổi">
                 <InputNumber
                   min={0}
-                  style={{ width: "100%" }}
+                  className="tables-demo-table"
                   disabled
                   placeholder="Tuổi sẽ được tính tự động"
                 />

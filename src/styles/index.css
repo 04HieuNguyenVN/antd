@@ -1,0 +1,34 @@
+/* Import all component styles */
+@import "./common.css";
+@import "./layouts/MainLayout.css";
+@import "./pages/Dashboard.css";
+@import "./pages/LayoutComponentsDemo.css";
+@import "./pages/DataEntryDemo.css";
+@import "./pages/DataDisplayDemo.css";
+@import "./pages/FormDemo.css";
+@import "./pages/FeedbackDemo.css";
+@import "./pages/NavigationDemo.css";
+@import "./pages/OtherComponentsDemo.css";
+@import "./pages/UserDetail.css";
+@import "./pages/TablesDemo.css";
+/* @import "./pages/AmisEditor.css"; */
+/* @import "./pages/AmisView.css"; */
+
+/* Global styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}

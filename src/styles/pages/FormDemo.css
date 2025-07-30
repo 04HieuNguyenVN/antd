@@ -1,0 +1,57 @@
+/* Form Demo Styles */
+.form-demo__container {
+  width: 100%;
+}
+
+.form-demo__password-item {
+  margin-bottom: 0;
+}
+
+.form-demo__color-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-demo__color-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.form-demo__date-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.form-demo__tree-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-demo__tree-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.form-demo__tree-age {
+  color: #666;
+  font-size: 12px;
+}
+
+.form-demo__upload-area {
+  margin-top: 16px;
+}
+
+.form-demo__drawer-content {
+  padding: 50px 0;
+  text-align: center;
+}
