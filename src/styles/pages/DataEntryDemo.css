@@ -1,0 +1,47 @@
+/* Data Entry Demo Styles */
+.data-entry__container {
+  width: 100%;
+}
+
+.data-entry__form-item-space {
+  margin-top: 8px;
+}
+
+.data-entry__input-number {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.data-entry__select {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.data-entry__textarea {
+  margin-top: 8px;
+}
+
+.data-entry__color-picker {
+  margin-top: 8px;
+}
+
+.data-entry__color-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.data-entry__color-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.data-entry__upload-area {
+  margin-top: 16px;
+}
+
+.data-entry__center {
+  text-align: center;
+}

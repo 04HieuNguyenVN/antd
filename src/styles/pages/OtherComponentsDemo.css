@@ -1,0 +1,40 @@
+/* Other Components Demo Styles */
+.other-components__container {
+  width: 100%;
+}
+
+.other-components__button-space {
+  margin-bottom: 16px;
+}
+
+.other-components__typography {
+  margin-bottom: 16px;
+}
+
+.other-components__card {
+  margin-bottom: 16px;
+}
+
+.other-components__divider {
+  margin: 24px 0;
+}
+
+.other-components__space {
+  margin-bottom: 16px;
+}
+
+.other-components__alert {
+  margin-bottom: 8px;
+}
+
+.other-components__tag {
+  margin: 4px;
+}
+
+.other-components__badge {
+  margin-right: 16px;
+}
+
+.other-components__tooltip {
+  margin-right: 8px;
+}

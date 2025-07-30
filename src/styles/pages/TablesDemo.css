@@ -1,0 +1,183 @@
+/* Tables Demo Styles */
+.tables-demo__container {
+  width: 100%;
+}
+
+.tables-demo__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tables-demo__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.tables-demo__search {
+  margin-bottom: 16px;
+}
+
+.tables-demo-container {
+  width: 100%;
+}
+
+.tables-demo-header {
+  margin-right: 8px;
+}
+
+.tables-demo-row {
+  margin-top: 16px;
+}
+
+.tables-demo-table {
+  width: 100%;
+}
+
+.cursor-default {
+  cursor: default;
+}
+
+.text-primary {
+  color: #1890ff;
+}
+
+.text-success {
+  color: #52c41a;
+}
+
+.text-meta {
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}
+
+.chart-icon-primary {
+  color: #1890ff;
+}
+
+.chart-icon-success {
+  color: #52c41a;
+}
+
+.margin-top-8 {
+  margin-top: 8px;
+}
+
+.margin-top-8-block {
+  margin-top: 8px;
+  display: block;
+}
+
+.metric-card-content {
+  text-align: center;
+  padding: 24px;
+}
+
+.metric-card-statistic {
+  margin-bottom: 16px;
+}
+
+.metric-card-progress {
+  margin-bottom: 8px;
+}
+
+.chart-container {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+}
+
+.chart-placeholder {
+  text-align: center;
+  padding: 20px;
+  background: #fafafa;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+}
+
+.avatar-preview {
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  cursor: pointer;
+}
+
+.user-avatar {
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  cursor: pointer;
+}
+
+.metadata-text {
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}
+
+.name-text {
+  cursor: default;
+  font-weight: 500;
+}
+
+.chart-metric-container {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+}
+
+.chart-metric-placeholder {
+  text-align: center;
+  padding: 20px;
+  background: #fafafa;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+}
+
+.center-content {
+  text-align: center;
+}
+
+.tables-demo__table-container {
+  margin-bottom: 24px;
+}
+
+.tables-demo__settings {
+  margin-bottom: 16px;
+}
+
+.tables-demo__tabs {
+  margin-top: 24px;
+}
+
+.tables-demo__center {
+  text-align: center;
+}
+
+.tables-demo__form {
+  margin-top: 16px;
+}
+
+.tables-demo__modal-actions {
+  margin-top: 16px;
+  text-align: right;
+}
+
+.tables-demo__drawer-content {
+  padding: 16px 0;
+}
+
+.tables-demo__card-grid {
+  width: 33.33%;
+  text-align: center;
+}

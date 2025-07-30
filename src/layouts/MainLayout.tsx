@@ -12,15 +12,22 @@ import {
   InteractionOutlined,
 } from "@ant-design/icons";
 import { Outlet, useNavigate } from "react-router-dom";
+import "../styles/layouts/MainLayout.css";
 
 const { Header, Sider, Content } = Layout;
 
-const MainLayout = () => {
-  const [collapsed, setCollapsed] = useState(false); // Trạng thái đóng/mở sidebar
+interface MenuItem {
+  key: string;
+  icon: React.ReactNode;
+  label: string;
+}
+
+const MainLayout: React.FC = () => {
+  const [collapsed, setCollapsed] = useState<boolean>(false); // Trạng thái đóng/mở sidebar
   const navigate = useNavigate(); // Hook điều hướng
 
   // Danh sách các mục menu với icon và đường dẫn
-  const menuItems = [
+  const menuItems: MenuItem[] = [
     {
       key: "/",
       icon: <DashboardOutlined />,
@@ -66,25 +73,18 @@ const MainLayout = () => {
       icon: <InteractionOutlined />,
       label: "Other Components",
     },
+    {
+      key: "/amis-editor",
+      icon: <EditOutlined />,
+      label: "Amis Editor",
+    },
   ];
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout className="main-layout">
       {/* Sidebar bên trái */}
       <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
-        <div
-          style={{
-            height: 32,
-            margin: 16,
-            background: "rgba(255, 255, 255, 0.2)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "white",
-          }}
-        >
-          Ant Demo
-        </div>
+        <div className="main-layout__logo">Ant Demo</div>
 
         {/* Menu điều hướng chính */}
         <Menu
@@ -98,16 +98,9 @@ const MainLayout = () => {
 
       {/* Khu vực nội dung chính */}
       <Layout>
-        <Header style={{ padding: 0, background: "#fff" }} />
-        <Content style={{ margin: "16px" }}>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: "#fff",
-              borderRadius: 4,
-            }}
-          >
+        <Header className="main-layout__header" />
+        <Content className="main-layout__content">
+          <div className="main-layout__content-wrapper">
             {/* Outlet để render các trang con */}
             <Outlet />
           </div>

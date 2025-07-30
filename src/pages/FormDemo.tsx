@@ -47,9 +47,7 @@ import {
   TeamOutlined,
   CalendarOutlined,
   BgColorsOutlined,
-  StarOutlined,
   ClockCircleOutlined,
-  FileTextOutlined,
   HeartOutlined,
   ThunderboltOutlined,
   RocketOutlined,
@@ -57,36 +55,36 @@ import {
   GiftOutlined,
   InfoCircleOutlined,
   CheckCircleOutlined,
-  ExclamationCircleOutlined,
   WarningOutlined,
   QuestionCircleOutlined,
-  BellOutlined,
   MailOutlined,
   PhoneOutlined,
-  HomeOutlined,
 } from "@ant-design/icons";
 import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
 const { Step } = Steps;
 
-const FormDemo = () => {
-  const [passwordStrength, setPasswordStrength] = useState(0);
-  const [passwordSteps, setPasswordSteps] = useState(0);
-  const [selectedColors, setSelectedColors] = useState([]);
-  const [selectedDates, setSelectedDates] = useState([]); // Danh sách các ngày đã chọn
-  const [currentStep, setCurrentStep] = useState(0);
-  const [sliderValue, setSliderValue] = useState(30);
+const FormDemo: React.FC = () => {
+  const [passwordStrength, setPasswordStrength] = useState<number>(0);
+  const [passwordSteps, setPasswordSteps] = useState<number>(0);
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [selectedDates, setSelectedDates] = useState<string[]>([]); // Danh sách các ngày đã chọn
+  const [currentStep, setCurrentStep] = useState<number>(0);
+  const [sliderValue, setSliderValue] = useState<number>(30);
   const [ratingValue, setRatingValue] = useState(0);
-  const [transferData, setTransferData] = useState([]);
-  const [targetKeys, setTargetKeys] = useState([]);
+  const [transferData, setTransferData] = useState<any[]>([]);
+  const [targetKeys, setTargetKeys] = useState<string[]>([]);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [autoCompleteOptions, setAutoCompleteOptions] = useState([]);
+  const [autoCompleteOptions, setAutoCompleteOptions] = useState<
+    { value: string }[]
+  >([]);
 
   // Lấy dữ liệu từ tablesSlice
-  const tablesData = useSelector((state) => state.tables.data);
+  const tablesData = useSelector((state: RootState) => state.tables.data);
 
   // Danh sách màu sắc có sẵn
   const colorOptions = [
@@ -172,7 +170,7 @@ const FormDemo = () => {
           title: (
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <img
-                src={person.avatar}
+                src={person.avatar || undefined}
                 alt={person.name}
                 style={{ width: 20, height: 20, borderRadius: "50%" }}
               />
@@ -222,7 +220,7 @@ const FormDemo = () => {
   const treeData = generateTreeData();
 
   // Hàm đánh giá độ mạnh của mật khẩu
-  const calculatePasswordStrength = (password) => {
+  const calculatePasswordStrength = (password: string) => {
     if (!password) {
       setPasswordStrength(0);
       setPasswordSteps(0);
@@ -290,7 +288,7 @@ const FormDemo = () => {
   };
 
   // Hàm xử lý khi form gửi thành công
-  const onFinish = (values) => {
+  const onFinish = (values: any) => {
     console.log("Thành công:", values);
     message.success(
       "Gửi biểu mẫu thành công! Kiểm tra console để xem giá trị."
@@ -298,19 +296,19 @@ const FormDemo = () => {
   };
 
   // Hàm xử lý khi form đăng ký thành công
-  const onFinishRegister = (values) => {
+  const onFinishRegister = (values: any) => {
     console.log("Đăng ký thành công:", values);
     message.success("Đăng ký tài khoản thành công!");
   };
 
   // Hàm xử lý khi form gửi thất bại
-  const onFinishFailed = (errorInfo) => {
+  const onFinishFailed = (errorInfo: any) => {
     console.log("Thất bại:", errorInfo);
     message.error("Gửi biểu mẫu thất bại.");
   };
 
   // Xử lý dữ liệu upload file
-  const normFile = (e) => {
+  const normFile = (e: any) => {
     if (Array.isArray(e)) {
       return e;
     }
@@ -318,13 +316,13 @@ const FormDemo = () => {
   };
 
   // Xử lý khi chọn màu sắc
-  const handleColorChange = (values) => {
+  const handleColorChange = (values: string[]) => {
     setSelectedColors(values);
     message.info(`Đã chọn ${values.length} màu: ${values.join(", ")}`);
   };
 
   // Xử lý khi chọn ngày từ DatePicker
-  const handleDateSelect = (date, dateString) => {
+  const handleDateSelect = (date: any, dateString: string) => {
     if (date && dateString) {
       // Kiểm tra xem ngày đã được chọn chưa
       if (!selectedDates.includes(dateString)) {
@@ -338,14 +336,14 @@ const FormDemo = () => {
   };
 
   // Xóa ngày khỏi danh sách đã chọn
-  const removeDateFromList = (dateToRemove) => {
+  const removeDateFromList = (dateToRemove: string) => {
     const newDates = selectedDates.filter((date) => date !== dateToRemove);
     setSelectedDates(newDates);
     message.info(`Đã xóa ngày: ${dateToRemove}`);
   };
 
   // Render option cho color select
-  const renderColorOption = (option) => (
+  const renderColorOption = (option: any) => (
     <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
       <div
         style={{
@@ -717,10 +715,9 @@ const FormDemo = () => {
           treeData={treeData}
           onSelect={(selectedKeys, info) => {
             console.log("Selected:", selectedKeys, info);
-            if (info.node.data) {
-              message.info(
-                `Đã chọn: ${info.node.data.name} - ${info.node.data.address}`
-              );
+            const nodeData = (info.node as any).data;
+            if (nodeData) {
+              message.info(`Đã chọn: ${nodeData.name} - ${nodeData.address}`);
             }
           }}
           style={{

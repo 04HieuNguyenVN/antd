@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 import {
   Table,
   Space,
@@ -22,9 +25,7 @@ import {
   Tabs,
   Collapse,
   Anchor,
-  QRCode,
   Segmented,
-  Watermark,
   Row,
   Col,
   Alert,
@@ -58,13 +59,19 @@ const { Title, Text, Paragraph } = Typography;
 const { TabPane } = Tabs;
 const { Panel } = Collapse;
 
-const positionOptions = ["top", "bottom", "both"];
-const alignOptions = ["start", "center", "end"];
+const positionOptions = ["top", "bottom", "both"] as const;
+const alignOptions = ["start", "center", "end"] as const;
 
-const DataDisplayDemo = () => {
+type PaginationPosition = (typeof positionOptions)[number];
+type PaginationAlign = (typeof alignOptions)[number];
+
+const DataDisplayDemo: React.FC = () => {
+  const navigate = useNavigate();
+  const tableData = useSelector((state: RootState) => state.tables.data);
+
   // State cho pagination
-  const [position, setPosition] = useState("bottom");
-  const [align, setAlign] = useState("center");
+  const [position, setPosition] = useState<PaginationPosition>("bottom");
+  const [align, setAlign] = useState<PaginationAlign>("center");
   const [activeTab, setActiveTab] = useState("1");
 
   // Dữ liệu cho Tree
@@ -151,84 +158,6 @@ const DataDisplayDemo = () => {
       ),
     },
   ];
-  // Dữ liệu bảng ví dụ
-  const tableData = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-      address: "New York No. 1 Lake Park",
-      tags: ["nice", "developer"],
-      title: "Senior Frontend Developer",
-      description:
-        "Chuyên gia phát triển giao diện người dùng với React và TypeScript",
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
-      address: "London No. 1 Lake Park",
-      tags: ["loser"],
-      title: "Backend Engineer",
-      description: "Kỹ sư phát triển backend với Node.js và MongoDB",
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      age: 32,
-      address: "Sidney No. 1 Lake Park",
-      tags: ["cool", "teacher"],
-      title: "Full Stack Developer",
-      description:
-        "Lập trình viên full-stack với kinh nghiệm về cả frontend và backend",
-    },
-    {
-      key: "4",
-      name: "Alice Johnson",
-      age: 28,
-      address: "Tokyo No. 1 Lake Park",
-      tags: ["creative", "designer"],
-      title: "UI/UX Designer",
-      description:
-        "Thiết kế giao diện và trải nghiệm người dùng cho ứng dụng web và mobile",
-    },
-    {
-      key: "5",
-      name: "Bob Wilson",
-      age: 35,
-      address: "Paris No. 1 Lake Park",
-      tags: ["leader", "manager"],
-      title: "Project Manager",
-      description: "Quản lý dự án phát triển phần mềm và điều phối team",
-    },
-    {
-      key: "6",
-      name: "Carol Davis",
-      age: 29,
-      address: "Berlin No. 1 Lake Park",
-      tags: ["analyst", "data"],
-      title: "Data Analyst",
-      description: "Phân tích dữ liệu và tạo báo cáo business intelligence",
-    },
-    {
-      key: "7",
-      name: "David Miller",
-      age: 31,
-      address: "Seoul No. 1 Lake Park",
-      tags: ["security", "expert"],
-      title: "Security Engineer",
-      description: "Chuyên gia bảo mật hệ thống và ứng dụng web",
-    },
-    {
-      key: "8",
-      name: "Eva Martinez",
-      age: 26,
-      address: "Madrid No. 1 Lake Park",
-      tags: ["mobile", "developer"],
-      title: "Mobile Developer",
-      description: "Phát triển ứng dụng di động cho iOS và Android",
-    },
-  ];
 
   // Cấu hình các cột của bảng
   const columns = [
@@ -243,7 +172,7 @@ const DataDisplayDemo = () => {
       ),
       dataIndex: "name",
       key: "name",
-      render: (text) => (
+      render: (text: any) => (
         <Tooltip title={`Xem thông tin chi tiết của ${text}`}>
           <a href="#!">{text}</a>
         </Tooltip>
@@ -260,7 +189,7 @@ const DataDisplayDemo = () => {
       ),
       dataIndex: "age",
       key: "age",
-      render: (age) => (
+      render: (age: number) => (
         <Tooltip title={`${age} tuổi`}>
           <span>{age}</span>
         </Tooltip>
@@ -277,7 +206,7 @@ const DataDisplayDemo = () => {
       ),
       dataIndex: "address",
       key: "address",
-      render: (address) => (
+      render: (address: string) => (
         <Tooltip title={`Địa chỉ đầy đủ: ${address}`}>
           <span>{address}</span>
         </Tooltip>
@@ -286,17 +215,38 @@ const DataDisplayDemo = () => {
     {
       title: "Hành động",
       key: "action",
-      render: (_, record) => (
+      render: (_: any, record: any) => (
         <Space size="middle">
+          <Tooltip title={`Xem chi tiết thông tin của ${record.name}`}>
+            <Button
+              type="link"
+              icon={<EyeOutlined />}
+              onClick={() => navigate(`/item/${record.key}`)}
+            >
+              Chi tiết
+            </Button>
+          </Tooltip>
           <Tooltip title={`Chỉnh sửa thông tin của ${record.name}`}>
-            <a href="#!">
-              <EditOutlined /> Chỉnh sửa
-            </a>
+            <Button
+              type="link"
+              icon={<EditOutlined />}
+              onClick={() => navigate(`/item/${record.key}`)}
+            >
+              Chỉnh sửa
+            </Button>
           </Tooltip>
           <Tooltip title={`Xóa ${record.name} khỏi danh sách`} color="red">
-            <a style={{ color: "red" }} href="#!">
-              <DeleteOutlined /> Xoá
-            </a>
+            <Button
+              type="link"
+              danger
+              icon={<DeleteOutlined />}
+              onClick={() => {
+                // Có thể thêm confirm dialog ở đây
+                console.log("Delete user:", record.key);
+              }}
+            >
+              Xóa
+            </Button>
           </Tooltip>
         </Space>
       ),
@@ -304,7 +254,7 @@ const DataDisplayDemo = () => {
   ];
 
   return (
-    <Watermark content="Ant Design Demo">
+    <div>
       <BackTop />
       <Space direction="vertical" size="large" style={{ width: "100%" }}>
         {/* Tiêu đề chính */}
@@ -396,7 +346,7 @@ const DataDisplayDemo = () => {
                   {
                     title: "Status",
                     key: "status",
-                    render: (_, record, index) => (
+                    render: (_: any, record: any, index: number) => (
                       <Space>
                         <Badge
                           status={index % 2 === 0 ? "success" : "processing"}
@@ -507,7 +457,6 @@ const DataDisplayDemo = () => {
             <List
               pagination={{
                 position,
-                align,
                 pageSize: 3,
                 showSizeChanger: true,
                 showQuickJumper: true,
@@ -518,12 +467,21 @@ const DataDisplayDemo = () => {
               renderItem={(item, index) => (
                 <List.Item
                   actions={[
+                    <Button
+                      key="detail"
+                      type="primary"
+                      size="small"
+                      icon={<EyeOutlined />}
+                      onClick={() => navigate(`/item/${item.key}`)}
+                    >
+                      Xem chi tiết
+                    </Button>,
                     <Badge
                       key="badge"
                       count={index + 1}
                       style={{ backgroundColor: "#52c41a" }}
                     >
-                      <Button type="link">Xem</Button>
+                      <Button type="link">#{index + 1}</Button>
                     </Badge>,
                     <Popover
                       key="popover"
@@ -538,6 +496,12 @@ const DataDisplayDemo = () => {
                           <p>
                             <strong>Địa chỉ:</strong> {item.address}
                           </p>
+                          <p>
+                            <strong>Email:</strong> {item.email}
+                          </p>
+                          <p>
+                            <strong>Điện thoại:</strong> {item.phone}
+                          </p>
                           <Space>
                             <Tag color="blue">Active</Tag>
                             <Tag color="green">Verified</Tag>
@@ -546,7 +510,7 @@ const DataDisplayDemo = () => {
                       }
                       title="Thông tin chi tiết"
                     >
-                      <Button type="link">Chi tiết</Button>
+                      <Button type="link">Quick View</Button>
                     </Popover>,
                   ]}
                 >
@@ -554,21 +518,37 @@ const DataDisplayDemo = () => {
                     avatar={
                       <Badge dot status="success">
                         <Avatar
-                          src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}
+                          src={
+                            item.avatar ||
+                            `https://api.dicebear.com/7.x/miniavs/svg?seed=${item.key}`
+                          }
+                          icon={<UserOutlined />}
                         />
                       </Badge>
                     }
                     title={
                       <Space>
-                        <a href="https://ant.design">
-                          {item.name} - {item.title}
-                        </a>
+                        <Button
+                          type="link"
+                          style={{ padding: 0, height: "auto" }}
+                          onClick={() => navigate(`/item/${item.key}`)}
+                        >
+                          {item.name} ({item.age} tuổi)
+                        </Button>
                         <Tag color={index % 2 === 0 ? "blue" : "green"}>
                           {index % 2 === 0 ? "Online" : "Offline"}
                         </Tag>
                       </Space>
                     }
-                    description={item.description}
+                    description={
+                      <div>
+                        <Text>{item.address}</Text>
+                        <br />
+                        <Text type="secondary">
+                          {item.email} • {item.phone}
+                        </Text>
+                      </div>
+                    }
                   />
                 </List.Item>
               )}
@@ -590,7 +570,13 @@ const DataDisplayDemo = () => {
                   title="Timeline Component"
                   extra={<ClockCircleOutlined />}
                 >
-                  <Timeline items={timelineData} />
+                  <Timeline>
+                    {timelineData.map((item, index) => (
+                      <Timeline.Item key={index} color={item.color}>
+                        {item.children}
+                      </Timeline.Item>
+                    ))}
+                  </Timeline>
                 </Card>
               </Col>
               <Col span={12}>
@@ -700,23 +686,14 @@ const DataDisplayDemo = () => {
                 </Row>
               </Card>
 
-              {/* QR Code */}
+              {/* Placeholder for QR Code (not available in Antd v4) */}
               <Card title="QR Code Component">
-                <Row gutter={16}>
-                  <Col span={8}>
-                    <QRCode value="https://ant.design/" />
-                  </Col>
-                  <Col span={8}>
-                    <QRCode value="https://ant.design/" status="loading" />
-                  </Col>
-                  <Col span={8}>
-                    <QRCode
-                      value="https://ant.design/"
-                      status="expired"
-                      onRefresh={() => console.log("refresh")}
-                    />
-                  </Col>
-                </Row>
+                <Alert
+                  message="QR Code component"
+                  description="QR Code component không có sẵn trong Ant Design v4. Bạn có thể sử dụng thư viện bên thứ 3 như qrcode.js"
+                  type="info"
+                  showIcon
+                />
               </Card>
             </Space>
           </TabPane>
@@ -838,14 +815,11 @@ const DataDisplayDemo = () => {
             {/* Anchor */}
             <Card title="Anchor Component" style={{ marginTop: 16 }}>
               <Affix offsetTop={100}>
-                <Anchor
-                  direction="horizontal"
-                  items={[
-                    { key: "part-1", href: "#part-1", title: "Part 1" },
-                    { key: "part-2", href: "#part-2", title: "Part 2" },
-                    { key: "part-3", href: "#part-3", title: "Part 3" },
-                  ]}
-                />
+                <Anchor>
+                  <Anchor.Link href="#part-1" title="Part 1" />
+                  <Anchor.Link href="#part-2" title="Part 2" />
+                  <Anchor.Link href="#part-3" title="Part 3" />
+                </Anchor>
               </Affix>
             </Card>
 
@@ -941,7 +915,7 @@ const DataDisplayDemo = () => {
           </Col>
         </Row>
       </Space>
-    </Watermark>
+    </div>
   );
 };
 

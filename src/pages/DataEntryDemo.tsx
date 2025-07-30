@@ -16,7 +16,6 @@ import {
   Button,
   AutoComplete,
   Cascader,
-  ColorPicker,
   Mentions,
   TreeSelect,
   Typography,
@@ -43,9 +42,10 @@ const DataEntryDemo = () => {
   const [form] = Form.useForm();
   const [sliderValue, setSliderValue] = useState(30);
   const [rateValue, setRateValue] = useState(0);
-  const [colorValue, setColorValue] = useState("#1677ff");
-  const [fileList, setFileList] = useState([]);
-  const [autoCompleteOptions, setAutoCompleteOptions] = useState([]);
+  const [fileList, setFileList] = useState<any[]>([]);
+  const [autoCompleteOptions, setAutoCompleteOptions] = useState<
+    { value: string }[]
+  >([]);
 
   // Dữ liệu cho AutoComplete
   const mockSearchResults = [
@@ -138,7 +138,7 @@ const DataEntryDemo = () => {
   ];
 
   // Xử lý AutoComplete
-  const handleSearch = (value) => {
+  const handleSearch = (value: string) => {
     const filteredOptions = mockSearchResults
       .filter((item) => item.toLowerCase().includes(value.toLowerCase()))
       .map((item) => ({ value: item }));
@@ -150,7 +150,7 @@ const DataEntryDemo = () => {
     name: "file",
     multiple: true,
     fileList,
-    onChange: (info) => {
+    onChange: (info: any) => {
       setFileList(info.fileList);
       const { status } = info.file;
       if (status !== "uploading") {
@@ -167,7 +167,7 @@ const DataEntryDemo = () => {
     },
   };
 
-  const onFinish = (values) => {
+  const onFinish = (values: any) => {
     console.log("Form values:", values);
     message.success("Form submitted successfully!");
   };
@@ -232,7 +232,10 @@ const DataEntryDemo = () => {
               formatter={(value) =>
                 `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
               }
-              parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+              parser={(value) => {
+                const parsed = value ? value.replace(/\$\s?|(,*)/g, "") : "0";
+                return parsed as any;
+              }}
               style={{ width: "100%", marginTop: 8 }}
             />
           </Col>
@@ -396,21 +399,16 @@ const DataEntryDemo = () => {
           <Col span={8}>
             <Text strong>Color Picker:</Text>
             <div style={{ marginTop: 8 }}>
-              <ColorPicker
-                value={colorValue}
-                onChange={(color) => setColorValue(color.toHexString())}
-                showText
-              />
               <div
                 style={{
-                  width: "100%",
-                  height: 40,
-                  backgroundColor: colorValue,
-                  marginTop: 8,
-                  borderRadius: 4,
+                  padding: 8,
                   border: "1px solid #d9d9d9",
+                  borderRadius: 4,
+                  textAlign: "center",
                 }}
-              />
+              >
+                ColorPicker không có sẵn trong Ant Design v4
+              </div>
             </div>
           </Col>
           <Col span={16}>

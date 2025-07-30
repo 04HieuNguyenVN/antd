@@ -1,0 +1,31 @@
+/* Feedback Demo Styles */
+.feedback-demo__container {
+  width: 100%;
+}
+
+.feedback-demo__center {
+  text-align: center;
+}
+
+.feedback-demo__drawer-content {
+  padding: 20px 0;
+}
+
+.feedback-demo__drawer-space {
+  margin-top: 16px;
+}
+
+.feedback-demo__progress-space {
+  margin-top: 16px;
+}
+
+.feedback-demo__back-top {
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  border-radius: 4px;
+  background-color: #1088e9;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+}

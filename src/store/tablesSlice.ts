@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import dayjs from "dayjs";
+import { TableItem, TablesState } from "../types/store";
 
 let nextItemId = 6;
 
@@ -8,7 +9,7 @@ const placeholderAvatar =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFA0lEQVR4nN3W609TZxwH8GZvtmT/wa5vd4l/wZb4Ziq9g8bEIRMWYzaopVx64TKDomMTI8LUltPSgy3ltAwiCChCewr2dkoYQ4FtsnHTIVTuSK9c+lueE8Zgg1HktCx7km/65Lnk+eR5znlOWaz/c9Glxh2sFvNVhEQ4bBDzX+hSOauGs/wFU4bQpfuSnVhQUPDKvsCqvoj7gMgQ9NRJjy72YrLV6cYrELDchLBdQ/8+MRVCU17iojFd6NZnH3o9pjidiHukWizwDtzKD4ftFQCOrYP6HFdSA0aJsCVmuFtpRz5EuMmG4m1hsCGrNjXUSo8G9Wm8oFEi7NSlcj+JKtAoEfb/pj8XjgQHG+K33IAR4jzUZCZ4q8S8rKjg9CL2odvy44v/dqywQ3xt14GQCHy4iH2AcWC1RHCrX6PY1e5N1hfD3N2STW19avkKIeHrGQcSkvins81XI8Yt3LsGtbJjUJOdAMPV59fb5++WAJEuGGccaBDzfUFSGRFuBD1v2QkwRF6E+cc3oFZxDJ6aCum+5Q4M9CJuiHGgTsRZQW/l3zFBUglzzSUwXlcEvWop3PnqBDQVnoSp3lKA2So6031lNBiNDbWrwHCWF2AcaDjLe4EuYYR6fvsytF5KAWNmPHwvPwZ3Cj6F1uLPocuQDZ7uq+uwjaHwdOhRZsFM01UwZsQ/YRxozBT2e25/S+8UQg1ZL8Ly88otMVtl8uE1qM89DqPEBQS0Mg6sEvPLHpVLV5vPJcKo/euIYbCWpQkcDOk8oEpEQb2II2UcWH+Bfakx/0TYIObB0kTkOwcbokvjQK3saLi+KI55YJuas0BkCOhFXgYHa8AaWTyYKzgLjAPNWs6c5bukPQM7sGQwa9lzjAMtOJegTJ8t7xVImZJWSJxbxTiQrOC8a8HZs2YNG8Iz+l3jwjN6QHPNOHv2Pn74bVY0SpuG874F5y6HJtS7BoYmNGDW8pbvY4ffY0WzWHUCarK/aNfA531F0K7jO1nRLm0V7DM/NCQv7hbY1ZDsbdVyTkcd2F558DUS53qmfr4c+Vfkp2/AgvMm7pXFvcqKRTFjcR+TlXzfwtBffwi2y/xgKZCVfG+rhv1RTHDryAoOl8R5MEQpYGXqn18W1DbkkgMaY9Gy2az9KG2aOOhqOAlkJQ/6zWkQeFZOB9VRW1dDEqAx+4L7E+jpz4dnPQp4eC8FOvRCOqiO2lBfTIEKzP6OXOlMz9NQrhwNNY4Wn+jLpyFbBfWhMWgsmiMtd4izbj5g/pKWl7nfUmAUkYNR/tK7A76aH6ehZTAAZJ0EHrWe2RbY23oGrHUZ9Fg0p7R5wKfAKH+OmqrOVLneZAQnVdkTZJjTpyZHl6y/r4DNA+t5MDoDJHEK3A0pMExlwHhvLh1Ud9cng4U4RY/ZOId8ugyYZTSkKHd5s5QOwZ5wMqUzO1/b6W18vLhpkU3IMT9YbQYgTafBjPPpoHq7vRpsY/5t5zX+sgh52k6vAnNlvvTO5VW4vfeHg9suYttj2kZCgNaQqhzCXT9zcpXT1zzgixrOtpamAS/IMadXdt3xRsTAHLXLiFlGg9HG2daiMo+E0IsT8VWiwFxB69jmFyKasY6tAFoTndzOx6t0ppc1/+qLFc62FnQFoXtyR2Cuxu2q6Z6OKc7mATB1T0Ouxm2P5PnztAwFYg5sGQxAjpp6tiNQpnL4pUoH7EdkKod/R+B/rfwBBuK/i4zrKkUAAAAASUVORK5CYII=";
 
 // Hàm tính tuổi từ ngày sinh
-const calculateAge = (birthDate) => {
+const calculateAge = (birthDate: string | null): number => {
   if (!birthDate) return 0;
   const today = dayjs();
   const birth = dayjs(birthDate);
@@ -170,16 +171,16 @@ const tablesSlice = createSlice({
         avatar: placeholderAvatar,
       },
     ],
-  },
+  } as TablesState,
   reducers: {
-    addItem: (state, action) => {
-      const newItem = {
+    addItem: (state, action: PayloadAction<Omit<TableItem, "key">>) => {
+      const newItem: TableItem = {
         key: (nextItemId++).toString(),
         ...action.payload,
       };
       state.data.push(newItem);
     },
-    updateItem: (state, action) => {
+    updateItem: (state, action: PayloadAction<TableItem>) => {
       const index = state.data.findIndex(
         (item) => item.key === action.payload.key
       );
@@ -187,7 +188,7 @@ const tablesSlice = createSlice({
         state.data[index] = { ...state.data[index], ...action.payload };
       }
     },
-    deleteItem: (state, action) => {
+    deleteItem: (state, action: PayloadAction<string>) => {
       state.data = state.data.filter((item) => item.key !== action.payload);
     },
   },

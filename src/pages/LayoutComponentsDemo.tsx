@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../styles/pages/LayoutComponentsDemo.css";
 import {
   Layout,
   Card,
@@ -12,7 +13,6 @@ import {
   Anchor,
   BackTop,
   ConfigProvider,
-  Flex,
   Button,
   Input,
   Collapse,
@@ -35,19 +35,11 @@ import {
   UpOutlined,
   DownOutlined,
   SettingOutlined,
-  FileOutlined,
-  TeamOutlined,
-  AppstoreOutlined,
 } from "@ant-design/icons";
+
 const { Title, Text } = Typography;
 const { Header, Content, Footer, Sider } = Layout;
-
-const style = {
-  background: "#0092ff",
-  padding: "8px 0",
-  color: "white",
-  textAlign: "center",
-};
+const { Panel } = Collapse;
 
 const LayoutComponentsDemo = () => {
   const [activeTab, setActiveTab] = useState("1");
@@ -80,7 +72,7 @@ const LayoutComponentsDemo = () => {
   const dropdownItems = [
     { key: "1", label: "Tùy chọn 1", icon: <UserOutlined /> },
     { key: "2", label: "Tùy chọn 2", icon: <SettingOutlined /> },
-    { type: "divider" },
+    { type: "divider" as const },
     { key: "3", label: "Đăng xuất", icon: <LoadingOutlined /> },
   ];
 
@@ -138,13 +130,11 @@ const LayoutComponentsDemo = () => {
   return (
     <Layout>
       {/* Header của layout */}
-      <Header style={{ color: "white", textAlign: "center", fontSize: "24px" }}>
-        Bố cục Ant Design
-      </Header>
+      <Header className="layout-header">Bố cục Ant Design</Header>
 
       {/* Nội dung chính */}
-      <Content style={{ padding: "24px 50px" }}>
-        <Space direction="vertical" size="large" style={{ width: "100%" }}>
+      <Content className="layout-content">
+        <Space direction="vertical" size="large" className="layout-space-full">
           <Title level={2}>Các thành phần bố cục</Title>
 
           {/* Hệ thống lưới cơ bản */}
@@ -154,26 +144,26 @@ const LayoutComponentsDemo = () => {
             <Divider>Lưới cơ bản</Divider>
             <Row>
               <Col span={24}>
-                <div style={style}>col-24</div>
+                <div className="layout-grid-style">col-24</div>
               </Col>
             </Row>
             <Row>
               <Col span={12}>
-                <div style={style}>col-12</div>
+                <div className="layout-grid-style">col-12</div>
               </Col>
               <Col span={12}>
-                <div style={{ ...style, background: "#00a0e9" }}>col-12</div>
+                <div className="layout-grid-style-alt">col-12</div>
               </Col>
             </Row>
             <Row>
               <Col span={8}>
-                <div style={style}>col-8</div>
+                <div className="layout-grid-style">col-8</div>
               </Col>
               <Col span={8}>
-                <div style={{ ...style, background: "#00a0e9" }}>col-8</div>
+                <div className="layout-grid-style-alt">col-8</div>
               </Col>
               <Col span={8}>
-                <div style={style}>col-8</div>
+                <div className="layout-grid-style">col-8</div>
               </Col>
             </Row>
 
@@ -181,16 +171,16 @@ const LayoutComponentsDemo = () => {
             <Divider>Lưới có khoảng cách (Gutter)</Divider>
             <Row gutter={16}>
               <Col span={6}>
-                <div style={style}>col-6</div>
+                <div className="layout-grid-style">col-6</div>
               </Col>
               <Col span={6}>
-                <div style={style}>col-6</div>
+                <div className="layout-grid-style">col-6</div>
               </Col>
               <Col span={6}>
-                <div style={style}>col-6</div>
+                <div className="layout-grid-style">col-6</div>
               </Col>
               <Col span={6}>
-                <div style={style}>col-6</div>
+                <div className="layout-grid-style">col-6</div>
               </Col>
             </Row>
           </Card>
@@ -200,16 +190,16 @@ const LayoutComponentsDemo = () => {
           <Card>
             <Row gutter={[16, 16]}>
               <Col xs={24} sm={12} md={8} lg={6}>
-                <div style={style}>Hộp phản hồi</div>
+                <div className="layout-grid-style">Hộp phản hồi</div>
               </Col>
               <Col xs={24} sm={12} md={8} lg={6}>
-                <div style={style}>Hộp phản hồi</div>
+                <div className="layout-grid-style">Hộp phản hồi</div>
               </Col>
               <Col xs={24} sm={12} md={8} lg={6}>
-                <div style={style}>Hộp phản hồi</div>
+                <div className="layout-grid-style">Hộp phản hồi</div>
               </Col>
               <Col xs={24} sm={12} md={8} lg={6}>
-                <div style={style}>Hộp phản hồi</div>
+                <div className="layout-grid-style">Hộp phản hồi</div>
               </Col>
             </Row>
           </Card>
@@ -217,13 +207,9 @@ const LayoutComponentsDemo = () => {
           {/* Căn giữa Grid theo chiều ngang và dọc */}
           <Divider orientation="left">Canh giữa dòng (Justify / Align)</Divider>
           <Card>
-            <Row
-              justify="center"
-              align="middle"
-              style={{ height: "100px", border: "1px dashed #aaa" }}
-            >
+            <Row justify="center" align="middle" className="demo-content">
               <Col>
-                <div style={style}>Nội dung ở giữa</div>
+                <div className="layout-grid-style">Nội dung ở giữa</div>
               </Col>
             </Row>
           </Card>
@@ -233,13 +219,13 @@ const LayoutComponentsDemo = () => {
           <Card>
             <Row gutter={16}>
               <Col span={6} offset={6}>
-                <div style={style}>Dịch sang 6 cột</div>
+                <div className="layout-grid-style">Dịch sang 6 cột</div>
               </Col>
               <Col span={6} order={1}>
-                <div style={style}>Thứ tự 1</div>
+                <div className="layout-grid-style">Thứ tự 1</div>
               </Col>
               <Col span={6} order={0}>
-                <div style={style}>Thứ tự 0</div>
+                <div className="layout-grid-style">Thứ tự 0</div>
               </Col>
             </Row>
           </Card>
@@ -291,14 +277,14 @@ const LayoutComponentsDemo = () => {
             <Row gutter={[16, 16]}>
               <Col span={12}>
                 <Text strong>Breadcrumb:</Text>
-                <Breadcrumb
-                  items={[
-                    { href: "", title: <HomeOutlined /> },
-                    { href: "", title: "Trang chủ" },
-                    { href: "", title: "Danh sách" },
-                    { title: "Chi tiết" },
-                  ]}
-                />
+                <Breadcrumb>
+                  <Breadcrumb.Item href="">
+                    <HomeOutlined />
+                  </Breadcrumb.Item>
+                  <Breadcrumb.Item href="">Trang chủ</Breadcrumb.Item>
+                  <Breadcrumb.Item href="">Danh sách</Breadcrumb.Item>
+                  <Breadcrumb.Item>Chi tiết</Breadcrumb.Item>
+                </Breadcrumb>
               </Col>
               <Col span={12}>
                 <Text strong>Dropdown Menu:</Text>
@@ -320,7 +306,7 @@ const LayoutComponentsDemo = () => {
             <Menu
               mode="horizontal"
               items={menuItems}
-              style={{ marginTop: 8 }}
+              className="margin-top-8"
             />
 
             <Divider />
@@ -351,39 +337,46 @@ const LayoutComponentsDemo = () => {
               </Col>
               <Col span={12}>
                 <Text strong>Collapse:</Text>
-                <Collapse items={collapseItems} />
+                <Collapse>
+                  {collapseItems.map((item) => (
+                    <Panel header={item.label} key={item.key}>
+                      {item.children}
+                    </Panel>
+                  ))}
+                </Collapse>
               </Col>
             </Row>
           </Card>
 
-          {/* Flex Layout */}
-          <Divider orientation="left">Flex Layout</Divider>
+          {/* Flex Layout (Using Row/Col instead of Flex component) */}
+          <Divider orientation="left">Flex Layout (Row/Col)</Divider>
           <Card>
-            <Text strong>Flex Container:</Text>
-            <Flex gap="middle" wrap="wrap" style={{ marginTop: 16 }}>
-              <Button type="primary">Button 1</Button>
-              <Button>Button 2</Button>
-              <Button type="dashed">Button 3</Button>
-              <Button type="link">Button 4</Button>
-            </Flex>
+            <Text strong>Flex-like layout với Row/Col:</Text>
+            <Row gutter={16} className="margin-top-16">
+              <Col>
+                <Button type="primary">Button 1</Button>
+              </Col>
+              <Col>
+                <Button>Button 2</Button>
+              </Col>
+              <Col>
+                <Button type="dashed">Button 3</Button>
+              </Col>
+              <Col>
+                <Button type="link">Button 4</Button>
+              </Col>
+            </Row>
 
             <Divider />
 
-            <Text strong>Flex với justify và align:</Text>
-            <Flex
-              justify="space-between"
-              align="center"
-              style={{
-                height: 80,
-                background: "#f5f5f5",
-                padding: 16,
-                marginTop: 16,
-              }}
-            >
+            <Text strong>
+              Layout với justify và align (sử dụng CSS flexbox):
+            </Text>
+            <div className="flex-layout-demo">
               <div>Left</div>
               <div>Center</div>
               <div>Right</div>
-            </Flex>
+            </div>
           </Card>
 
           {/* Anchor và Affix */}
@@ -398,14 +391,11 @@ const LayoutComponentsDemo = () => {
                 </Affix>
               </Col>
               <Col span={16}>
-                <Anchor
-                  direction="horizontal"
-                  items={[
-                    { key: "part-1", href: "#part-1", title: "Phần 1" },
-                    { key: "part-2", href: "#part-2", title: "Phần 2" },
-                    { key: "part-3", href: "#part-3", title: "Phần 3" },
-                  ]}
-                />
+                <Anchor>
+                  <Anchor.Link href="#part-1" title="Phần 1" />
+                  <Anchor.Link href="#part-2" title="Phần 2" />
+                  <Anchor.Link href="#part-3" title="Phần 3" />
+                </Anchor>
               </Col>
             </Row>
           </Card>
@@ -421,11 +411,7 @@ const LayoutComponentsDemo = () => {
               <Col span={8}>
                 <Text strong>Spin Loading:</Text>
                 <Spin size="large">
-                  <div
-                    style={{ height: 100, background: "#f5f5f5", padding: 20 }}
-                  >
-                    Nội dung đang tải...
-                  </div>
+                  <div className="form-content">Nội dung đang tải...</div>
                 </Spin>
               </Col>
               <Col span={8}>
@@ -457,37 +443,21 @@ const LayoutComponentsDemo = () => {
           {/* ConfigProvider Demo */}
           <Divider orientation="left">Theme Configuration</Divider>
           <Card>
-            <Text strong>Custom Theme với ConfigProvider:</Text>
-            <ConfigProvider
-              theme={{
-                token: {
-                  colorPrimary: "#00b96b",
-                  borderRadius: 2,
-                },
-              }}
-            >
-              <Space style={{ marginTop: 16 }}>
+            <Text strong>
+              ConfigProvider Demo (v4 không hỗ trợ custom theme):
+            </Text>
+            <ConfigProvider>
+              <Space className="margin-top-16">
                 <Button type="primary">Primary Button</Button>
                 <Button>Default Button</Button>
-                <Input placeholder="Custom themed input" />
+                <Input placeholder="Input với ConfigProvider" />
               </Space>
             </ConfigProvider>
           </Card>
 
           {/* BackTop */}
           <BackTop>
-            <div
-              style={{
-                height: 40,
-                width: 40,
-                lineHeight: "40px",
-                borderRadius: 4,
-                backgroundColor: "#1677ff",
-                color: "#fff",
-                textAlign: "center",
-                fontSize: 14,
-              }}
-            >
+            <div className="backtop-button">
               <UpOutlined />
             </div>
           </BackTop>
@@ -495,7 +465,7 @@ const LayoutComponentsDemo = () => {
       </Content>
 
       {/* Footer của layout */}
-      <Footer style={{ textAlign: "center" }}>
+      <Footer className="layout-footer">
         Ant Design ©{new Date().getFullYear()} Được phát triển bởi bạn
       </Footer>
     </Layout>

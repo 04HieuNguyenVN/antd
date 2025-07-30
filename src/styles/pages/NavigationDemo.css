@@ -1,0 +1,37 @@
+/* Navigation Demo Styles */
+.navigation-demo__container {
+  width: 100%;
+}
+
+.navigation-demo__menu {
+  margin-bottom: 20px;
+}
+
+.navigation-demo__menu-inline {
+  width: 256px;
+}
+
+.navigation-demo__breadcrumb {
+  margin: 16px 0;
+}
+
+.navigation-demo__pagination {
+  margin: 16px 0;
+  text-align: center;
+}
+
+.navigation-demo__steps {
+  margin: 16px 0;
+}
+
+.navigation-demo__dropdown {
+  margin: 8px;
+}
+
+.navigation-demo__anchor {
+  padding: 20px 0;
+}
+
+.navigation-demo__card {
+  margin-bottom: 16px;
+}

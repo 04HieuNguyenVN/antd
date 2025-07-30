@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Card,
-  Divider,
-  Space,
-  Typography,
-  FloatButton,
-  ColorPicker,
-} from "antd";
-import { PlusOutlined, CustomerServiceOutlined } from "@ant-design/icons";
+import { Button, Card, Divider, Space, Typography } from "antd";
 
 const { Title, Paragraph, Text, Link } = Typography;
 
@@ -73,30 +64,25 @@ const OtherComponentsDemo = () => {
         </Typography>
       </Card>
 
-      {/* Vùng hiển thị nút nổi (FloatButton) */}
-      <Divider orientation="left">Nút Nổi (FloatButton)</Divider>
+      {/* Thông báo về components không có sẵn */}
+      <Divider orientation="left">
+        Components không có trong Ant Design v4
+      </Divider>
       <Card>
-        {/* Nhóm nút nổi tròn */}
-        <FloatButton.Group shape="circle" style={{ right: 94 }}>
-          <FloatButton icon={<PlusOutlined />} />
-          {/* Nút quay lại đầu trang, luôn hiển thị */}
-          <FloatButton.BackTop visibilityHeight={0} />
-        </FloatButton.Group>
+        <Space direction="vertical" style={{ width: "100%" }}>
+          <Text strong>FloatButton:</Text>
+          <Text>
+            FloatButton component không có sẵn trong Ant Design v4. Bạn có thể
+            sử dụng Affix + Button để tạo hiệu ứng tương tự.
+          </Text>
 
-        {/* Nút hỗ trợ khách hàng */}
-        <FloatButton icon={<CustomerServiceOutlined />} style={{ right: 24 }} />
+          <Text strong>ColorPicker:</Text>
+          <Text>
+            ColorPicker component không có sẵn trong Ant Design v4. Bạn có thể
+            sử dụng thư viện bên thứ 3 như react-color.
+          </Text>
+        </Space>
       </Card>
-      <Divider orientation="left">ColorPicker</Divider>
-      <Space direction="vertical">
-        <ColorPicker defaultValue="#1677ff" size="small" />
-        <ColorPicker defaultValue="#1677ff" />
-        <ColorPicker defaultValue="#1677ff" size="large" />
-      </Space>
-      <Space direction="vertical">
-        <ColorPicker defaultValue="#1677ff" size="small" showText />
-        <ColorPicker defaultValue="#1677ff" showText />
-        <ColorPicker defaultValue="#1677ff" size="large" showText />
-      </Space>
     </Space>
   );
 };

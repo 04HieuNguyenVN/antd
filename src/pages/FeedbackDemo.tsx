@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   Button,
@@ -20,8 +20,6 @@ import {
   Empty,
   BackTop,
   Affix,
-  FloatButton,
-  Watermark,
   Row,
   Col,
   Steps,
@@ -48,8 +46,6 @@ import {
   StarOutlined,
   LikeOutlined,
   ShareAltOutlined,
-  SettingOutlined,
-  CustomerServiceOutlined,
   FileTextOutlined,
   UserOutlined,
   TeamOutlined,
@@ -58,13 +54,14 @@ import {
 const { Title, Text } = Typography;
 const { TabPane } = Tabs;
 const { Panel } = Collapse;
+const { Step } = Steps;
 
-const FeedbackDemo = () => {
-  const [modalVisible, setModalVisible] = React.useState(false);
-  const [drawerVisible, setDrawerVisible] = React.useState(false);
-  const [activeTab, setActiveTab] = React.useState("1");
-  const [loading, setLoading] = React.useState(false);
-  const [skeletonLoading, setSkeletonLoading] = React.useState(true);
+const FeedbackDemo: React.FC = () => {
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<string>("1");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [skeletonLoading, setSkeletonLoading] = useState<boolean>(true);
 
   // Hiển thị thông báo dạng message
   const showMessage = () => {
@@ -113,18 +110,8 @@ const FeedbackDemo = () => {
   };
 
   return (
-    <Watermark content="Feedback Demo">
+    <div>
       <BackTop />
-      <FloatButton.Group
-        trigger="hover"
-        type="primary"
-        style={{ right: 24 }}
-        icon={<CustomerServiceOutlined />}
-      >
-        <FloatButton icon={<QuestionCircleOutlined />} tooltip="Trợ giúp" />
-        <FloatButton icon={<BellOutlined />} tooltip="Thông báo" />
-        <FloatButton icon={<SettingOutlined />} tooltip="Cài đặt" />
-      </FloatButton.Group>
 
       <Space direction="vertical" size="large" style={{ width: "100%" }}>
         {/* Tiêu đề chính */}
@@ -365,7 +352,6 @@ const FeedbackDemo = () => {
                     <Space wrap>
                       <Popconfirm
                         title="Xóa mục này?"
-                        description="Bạn có chắc muốn xóa mục này không?"
                         onConfirm={() => message.success("Đã xóa")}
                         onCancel={() => message.info("Đã hủy")}
                         okText="Có"
@@ -473,67 +459,53 @@ const FeedbackDemo = () => {
             <Row gutter={[16, 16]}>
               <Col span={12}>
                 <Card title="Steps Component">
-                  <Steps
-                    current={1}
-                    items={[
-                      {
-                        title: "Bước 1",
-                        description: "Chuẩn bị dữ liệu",
-                        icon: <UserOutlined />,
-                      },
-                      {
-                        title: "Bước 2",
-                        description: "Xử lý thông tin",
-                        icon: <LoadingOutlined />,
-                      },
-                      {
-                        title: "Bước 3",
-                        description: "Hoàn thành",
-                        icon: <SmileOutlined />,
-                      },
-                    ]}
-                  />
+                  <Steps current={1}>
+                    <Step
+                      title="Bước 1"
+                      description="Chuẩn bị dữ liệu"
+                      icon={<UserOutlined />}
+                    />
+                    <Step
+                      title="Bước 2"
+                      description="Xử lý thông tin"
+                      icon={<LoadingOutlined />}
+                    />
+                    <Step
+                      title="Bước 3"
+                      description="Hoàn thành"
+                      icon={<SmileOutlined />}
+                    />
+                  </Steps>
                 </Card>
               </Col>
               <Col span={12}>
                 <Card title="Timeline Component">
-                  <Timeline
-                    items={[
-                      {
-                        color: "green",
-                        children: (
-                          <div>
-                            <p>
-                              <strong>Bắt đầu dự án</strong>
-                            </p>
-                            <p>2024-01-01 09:00</p>
-                          </div>
-                        ),
-                      },
-                      {
-                        color: "blue",
-                        children: (
-                          <div>
-                            <p>
-                              <strong>Hoàn thành milestone 1</strong>
-                            </p>
-                            <p>2024-01-15 14:30</p>
-                          </div>
-                        ),
-                      },
-                      {
-                        color: "red",
-                        children: (
-                          <div>
-                            <p>
-                              <strong>Gặp vấn đề</strong>
-                            </p>
-                            <p>2024-01-20 10:15</p>
-                          </div>
-                        ),
-                      },
-                    ]}
-                  />
+                  <Timeline>
+                    <Timeline.Item color="green">
+                      <div>
+                        <p>
+                          <strong>Bắt đầu dự án</strong>
+                        </p>
+                        <p>2024-01-01 09:00</p>
+                      </div>
+                    </Timeline.Item>
+                    <Timeline.Item color="blue">
+                      <div>
+                        <p>
+                          <strong>Hoàn thành milestone 1</strong>
+                        </p>
+                        <p>2024-01-15 14:30</p>
+                      </div>
+                    </Timeline.Item>
+                    <Timeline.Item color="red">
+                      <div>
+                        <p>
+                          <strong>Gặp vấn đề</strong>
+                        </p>
+                        <p>2024-01-20 10:15</p>
+                      </div>
+                    </Timeline.Item>
+                  </Timeline>
                 </Card>
               </Col>
             </Row>
@@ -596,7 +568,7 @@ const FeedbackDemo = () => {
         {/* Modals */}
         <Modal
           title="Hộp thoại cơ bản"
-          open={modalVisible}
+          visible={modalVisible}
           onOk={() => setModalVisible(false)}
           onCancel={() => setModalVisible(false)}
           footer={[
@@ -624,7 +596,7 @@ const FeedbackDemo = () => {
           placement="right"
           width={500}
           onClose={() => setDrawerVisible(false)}
-          open={drawerVisible}
+          visible={drawerVisible}
           extra={
             <Space>
               <Button onClick={() => setDrawerVisible(false)}>Hủy</Button>
@@ -659,7 +631,7 @@ const FeedbackDemo = () => {
           </Button>
         </Affix>
       </Space>
-    </Watermark>
+    </div>
   );
 };
 

@@ -1,15 +1,14 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import App from "./App";
-import "./index.css";
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
+import "antd/dist/antd.css"; // Import Ant Design styles
+ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
-    </Provider>{" "}
-  </React.StrictMode>
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
